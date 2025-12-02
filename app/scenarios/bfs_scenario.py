@@ -1,6 +1,5 @@
 from app.graph import Graph
 
-
 def create_metropolitan_network() -> Graph:
    
     network = Graph(directed=False)
@@ -41,10 +40,6 @@ def create_metropolitan_network() -> Graph:
     
     return network
 
-
-
-
-
 def get_test_scenarios() -> list:
     
     scenarios = [
@@ -52,7 +47,7 @@ def get_test_scenarios() -> list:
          "Pior caso: Cliente de um extremo a outro da cidade"),
         
         ("Core-Central", "Core-Leste", 
-         "Múltiplas rotas: Direto (1 hop) vs. Pelo anel (2+ hops)"),
+         "Múltiplas rotas: Direto (1 salto) vs. Pelo anel (2+ saltos)"),
         
         ("Access-Centro", "Access-Bairro5", 
          "Rota inter-regional: Centro → Leste"),
