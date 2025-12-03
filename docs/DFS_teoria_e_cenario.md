@@ -196,22 +196,37 @@ Simulamos uma **rede corporativa distribuída** com **18 dispositivos** em múlt
 - **Loops**: Links redundantes formam ciclos (testam STP)
 - **Realismo**: Arquitetura baseada em redes corporativas reais
 
-### Cenários de Teste
+### Implementação: Classe DFSRouter
 
-#### 1. **Descoberta Completa de Topologia**
-Inicia do Core HQ e mapeia toda a rede alcançável
+A implementação utiliza a classe `DFSRouter` que encapsula o algoritmo DFS aplicado ao contexto de descoberta de redes:
 
-#### 2. **Detecção de Loops**
-Identifica links redundantes que formam ciclos (importante para STP)
+```python
+from app.algorithms import DFSRouter
 
-#### 3. **Identificação de Segmentos Isolados**
-Detecta componentes desconectados (falhas de WAN, partições)
+dfs = DFSRouter()
 
-#### 4. **Exploração a partir de Filial**
-Descobre topologia da perspectiva de um site remoto
+# Descobre topologia completa a partir de um dispositivo
+result = dfs.discover_topology(network, dispositivo_inicial)
+```
 
-#### 5. **Análise de Conectividade**
-Verifica se todos os sites estão alcançáveis
+### Demonstração Prática
+
+O arquivo `examples/dfs_demo.py` demonstra a descoberta completa de topologia:
+
+#### **Descoberta de Topologia Corporativa**
+- **Ponto inicial**: HQ-Core-SW1 (Core do Headquarters)
+- **Rede**: 18 dispositivos distribuídos em 4 sites
+- **Objetivo**: Mapear toda a topologia alcançável
+- **Resultados**:
+  - **Ordem de descoberta**: Sequência em que os dispositivos foram encontrados
+  - **Árvore hierárquica**: Relações parent-child entre dispositivos
+  - **Cobertura**: Número total de dispositivos descobertos
+
+#### **O que a descoberta revela**:
+1. **Hierarquia da rede**: Como os dispositivos estão organizados
+2. **Caminhos de exploração**: Por onde o DFS navegou
+3. **Conectividade**: Quais dispositivos são alcançáveis
+4. **Estrutura**: Relações entre Core, Distribution e Access layers
 
 ---
 
@@ -270,29 +285,26 @@ Verifica se todos os sites estão alcançáveis
 
 ---
 
-## 🎯 Aplicações Práticas
+## 🎯 Aplicações Práticas do DFS em Redes
 
-### 1. Spanning Tree Protocol (STP)
+### 1. **Descoberta de Topologia (LLDP/CDP)**
+Exploração sistemática para mapear todos os dispositivos e suas conexões:
+- Cada dispositivo anuncia sua presença aos vizinhos
+- Constrói mapa completo da topologia
+- Identifica hierarquia e estrutura da rede
 
-STP usa conceitos similares ao DFS para:
-- Detectar loops na rede L2
-- Desabilitar portas redundantes
-- Criar árvore spanning livre de loops
+### 2. **Spanning Tree Protocol (STP)**
+DFS fornece base conceitual para STP:
+- Detecta loops através de back edges
+- Cria árvore spanning livre de ciclos
+- Desabilita portas redundantes
 
-### 2. Link Layer Discovery Protocol (LLDP)
-
-LLDP descobre vizinhos sequencialmente:
-- Cada dispositivo anuncia sua presença
-- Constrói mapa da topologia
-- Identifica conexões físicas
-
-### 3. Diagnóstico de Rede
-
-DFS ajuda a:
-- Mapear dispositivos alcançáveis
-- Identificar segmentos isolados
-- Verificar conectividade end-to-end
-- Detectar falhas de link
+### 3. **Diagnóstico e Monitoramento**
+Análise de conectividade e estrutura:
+- Mapeia dispositivos alcançáveis
+- Verifica conectividade end-to-end
+- Identifica segmentos isolados
+- Detecta falhas de link
 
 ---
 

@@ -173,25 +173,37 @@ Simulamos uma rede de provedor de internet (ISP) em uma cidade grande com **16 r
 - **Redundância**: Múltiplos caminhos entre pontos (alta disponibilidade)
 - **Realismo**: Hierarquia baseada em arquiteturas reais de ISPs
 
-### Cenários de Teste
+### Implementação: Classe BFSRouter
 
-#### 1. **Pior caso**: Access-Bairro1 → Access-Bairro4
-Cliente de um extremo a outro da cidade (atravessa todas as camadas)
+A implementação utiliza a classe `BFSRouter` que encapsula o algoritmo BFS aplicado ao contexto de roteamento:
 
-#### 2. **Múltiplas rotas**: Core-Central → Core-Leste
-Rota direta (1 hop) vs. pelo anel (2+ hops) - BFS escolhe a mais curta
+```python
+from app.algorithms import BFSRouter
 
-#### 3. **Rota inter-regional**: Access-Centro → Access-Bairro5
-Comunicação entre diferentes zonas da cidade
+router = BFSRouter()
 
-#### 4. **Comunicação hierárquica**: Entre roteadores Distribution
-Mostra como o backbone conecta diferentes regiões
+# Encontra rota com menor número de hops
+result = router.find_shortest_path(network, origem, destino)
 
-#### 5. **Subida/descida**: Access ↔ Core
-Demonstra a navegação vertical na hierarquia
+# Gera tabela de roteamento RIP completa
+routing_table = router.find_all_paths_from_source(network, roteador)
+```
 
-#### 6. **Tabela de roteamento completa**
-Gera tabela RIP com rotas para todos os destinos (simula protocolo real)
+### Demonstração Prática
+
+O arquivo `examples/bfs_demo.py` demonstra dois cenários principais:
+
+#### 1. **Rota entre extremos da cidade**
+- **Rota**: Access-Bairro1 → Access-Bairro4
+- **Objetivo**: Demonstrar BFS encontrando caminho com menor número de hops
+- **Percurso**: Atravessa múltiplas camadas (Access → Dist → Core → Dist → Access)
+- **Resultado**: Mostra o caminho completo, número de saltos e ordem de exploração
+
+#### 2. **Tabela de roteamento RIP completa**
+- **Roteador**: Core-Central
+- **Objetivo**: Gerar tabela RIP com rotas para todos os destinos
+- **Simulação**: Comportamento real do protocolo RIP
+- **Resultado**: Tabela formatada com destino, hops, próximo salto e caminho completo
 
 ---
 
