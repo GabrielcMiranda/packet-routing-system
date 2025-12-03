@@ -6,15 +6,12 @@ def print_algorithm_info():
     print("=========================================")
     
     print('Pesos Negativos        -> SIM     | Suporta links com custos negativos')
-    print('Ciclos Negativos       -> DETECTA | Identifica loops infinitos')
     print('Roteamento Distribuído -> SIM     | Modelo usado no RIP')
     print('Complexidade           -> O(V*E)  | Mais lento que Dijkstra')
     
     print("\nCasos de Uso:")
-    print('1. Protocolo RIP (Routing Information Protocol)')
-    print('2. Redes com links assimétricos')
-    print('3. Detecção de arbitragem em sistemas financeiros')
-    print('4. Cenários onde links podem ter "descontos" ou penalidades')
+    print('1. Cenários onde links podem ter "descontos" ou penalidades')
+    print('2. Roteamento distribuído - Protocolo RIP (Routing Information Protocol)\n')
 
 def demonstrate_negative_weights():
     print("PESOS NEGATIVOS - VANTAGEM DO BELLMAN-FORD")
@@ -30,21 +27,16 @@ def demonstrate_negative_weights():
     bf_router = BellmanFordRouter()
     bf_result = bf_router.find_shortest_path(network, source, dest)
     print(format_bellman_ford_result(bf_result, source, dest))
-    
-    print("Observação:")
-    print("- Bellman-Ford encontrou a rota com caches (peso negativo)")
-    print("- Iterações mostram o processo de convergência distribuída")
-    print("- Dijkstra NÃO suporta pesos negativos!\n")
 
 def demonstrate_distributed_routing():
     print("ROTEAMENTO DISTRIBUÍDO - SIMULAÇÃO RIP")
     
     network = create_distributed_network()
     
-    print("Rede mesh com 6 roteadores (R1 a R6)")
+    print("Rede mesh com 16 roteadores (R1 a R16)")
     print("Simulação: Cada roteador troca informações com vizinhos\n")
     
-    source, dest = "R1", "R6"
+    source, dest = "R1", "R16"
     
     bf_router = BellmanFordRouter()
     bf_result = bf_router.find_shortest_path(network, source, dest)
@@ -132,28 +124,12 @@ def compare_with_dijkstra():
 
 def main():
     print("Algoritmo de Bellman-Ford - Roteamento com Pesos Negativos")
-    print("Suporte a custos negativos e detecção de ciclos")
     
     print_algorithm_info()
     
     demonstrate_negative_weights()
     
     demonstrate_distributed_routing()
-    
-    demonstrate_penalty_links()
-    
-    demonstrate_negative_cycle_detection()
-    
-    compare_with_dijkstra()
-    
-    print()
-    print("DEMONSTRAÇÃO CONCLUÍDA!")
-    print("\nPrincipais aprendizados:")
-    print("1. Bellman-Ford suporta PESOS NEGATIVOS (Dijkstra não)")
-    print("2. Detecta CICLOS NEGATIVOS (loops infinitos)")
-    print("3. Simula roteamento DISTRIBUÍDO iterativo (protocolo RIP)")
-    print("4. Complexidade O(V*E) - mais lento que Dijkstra, mas mais versátil")
-    print("5. Ideal para cenários com 'descontos', 'penalidades' ou assimetria")
 
 if __name__ == "__main__":
     main()
