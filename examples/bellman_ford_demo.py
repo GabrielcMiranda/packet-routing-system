@@ -1,5 +1,5 @@
 from app.algorithms import BellmanFordRouter, DijkstraRouter, format_bellman_ford_result, format_bellman_ford_routing_table
-from app.scenarios.bellman_ford_scenario import create_network_with_negative_weights, create_distributed_network, create_network_with_penalty_links, create_negative_cycle_network
+from app.scenarios.bellman_ford_scenario import create_network_with_negative_weights, create_distributed_network
 
 def print_algorithm_info():
     print("Características do Algoritmo Bellman-Ford")
@@ -33,8 +33,7 @@ def demonstrate_distributed_routing():
     
     network = create_distributed_network()
     
-    print("Rede mesh com 16 roteadores (R1 a R16)")
-    print("Simulação: Cada roteador troca informações com vizinhos\n")
+    print("Rede com 16 roteadores (R1 a R16)")
     
     source, dest = "R1", "R16"
     
@@ -45,51 +44,6 @@ def demonstrate_distributed_routing():
     print("Tabela de Roteamento Completa:")
     routing_table = bf_router.calculate_routing_table(network, source)
     print(format_bellman_ford_routing_table(routing_table, source))
-
-def demonstrate_penalty_links():
-    print("LINKS COM PENALIDADES E BENEFÍCIOS")
-    
-    print("Cenário: Data centers com diferentes qualidades de link")
-    print("- Backbone padrão: 50 + 50 = 100")
-    print("- Link direto congestionado: 120")
-    print("- Link com compressão: 30 + (-10) + 30 = 50")
-    print("- Link premium com QoS: 40 + (-20) = 20 (melhor!)\n")
-    
-    network = create_network_with_penalty_links()
-    source, dest = "DC1", "DC3"
-    
-    bf_router = BellmanFordRouter()
-    bf_result = bf_router.find_shortest_path(network, source, dest)
-    print(format_bellman_ford_result(bf_result, source, dest))
-    
-    print("Interpretação:")
-    print("- Pesos negativos representam 'descontos' ou 'benefícios'")
-    print("- QoS garantido = custo efetivo menor")
-    print("- Compressão = economia de recursos = custo negativo\n")
-
-def demonstrate_negative_cycle_detection():
-    print("DETECÇÃO DE CICLOS NEGATIVOS")
-    
-    network = create_negative_cycle_network()
-    
-    print("Rede com CICLO NEGATIVO detectado!")
-    print("- Ciclo: B -> E -> F -> B (custo: 2 + 3 + (-10) = -5)")
-    print("- Problema: Passar pelo ciclo reduz custo infinitamente\n")
-    
-    bf_router = BellmanFordRouter()
-    cycle_info = bf_router.detect_negative_cycle(network)
-    
-    if cycle_info['has_negative_cycle']:
-        print("CICLO NEGATIVO DETECTADO!")
-        if cycle_info['cycle']:
-            cycle_str = " -> ".join(cycle_info['cycle'])
-            print(f"   Ciclo encontrado: {cycle_str}")
-        print("\nSignificado:")
-        print("- Configuração inválida na rede")
-        print("- Possível loop de roteamento")
-        print("- Bellman-Ford detecta e previne uso\n")
-    else:
-        print("Nenhum ciclo negativo detectado\n")
 
 def compare_with_dijkstra():
     print("COMPARAÇÃO: BELLMAN-FORD vs DIJKSTRA")
@@ -128,8 +82,6 @@ def main():
     print_algorithm_info()
     
     demonstrate_negative_weights()
-    
-    demonstrate_distributed_routing()
 
 if __name__ == "__main__":
     main()
