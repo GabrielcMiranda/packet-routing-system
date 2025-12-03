@@ -109,53 +109,6 @@ class DFSRouter:
             'finish_time': finish_time,
             'topology_tree': predecessors
         }
-    
-    def detect_loops(self, graph):
-
-        WHITE, GRAY, BLACK = 0, 1, 2
-        color = {v: WHITE for v in graph.get_vertices()}
-        cycles = []
-        
-        def dfs_visit(vertex):
-            color[vertex] = GRAY
-            
-            for neighbor, _ in graph.get_neighbors(vertex):
-                if color[neighbor] == WHITE:
-                    dfs_visit(neighbor)
-                elif color[neighbor] == GRAY:
-                    cycles.append((vertex, neighbor))
-            
-            color[vertex] = BLACK
-        
-        for vertex in graph.get_vertices():
-            if color[vertex] == WHITE:
-                dfs_visit(vertex)
-        
-        return {
-            'has_loops': len(cycles) > 0,
-            'loop_links': cycles
-        }
-    
-    def find_network_segments(self, graph):
-      
-        visited = set()
-        components = []
-        
-        def dfs_component(vertex, component):
-            visited.add(vertex)
-            component.add(vertex)
-            
-            for neighbor, _ in graph.get_neighbors(vertex):
-                if neighbor not in visited:
-                    dfs_component(neighbor, component)
-        
-        for vertex in graph.get_vertices():
-            if vertex not in visited:
-                component = set()
-                dfs_component(vertex, component)
-                components.append(component)
-        
-        return components
 
 
 # ============================================================================
