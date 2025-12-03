@@ -68,7 +68,7 @@ class BFSRouter:
 # DFS (Depth-First Search) - Descoberta de Topologia
 # ============================================================================
 
-class DFSNetworkDiscovery:
+class DFSRouter:
     
     def discover_topology(self, graph, source):
     
