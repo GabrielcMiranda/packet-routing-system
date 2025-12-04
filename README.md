@@ -61,7 +61,6 @@ python -m examples.dijkstra_demo
 
 # Bellman-Ford - Roteamento com pesos negativos
 python -m examples.bellman_ford_demo
-```
 
 packet-routing-system/
 ├── app/
