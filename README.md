@@ -108,4 +108,8 @@ packet-routing-system/
 
 ## 👥 Equipe
 
+- Carlos Eduardo Cardoso Silva
+- Gabriel Costa de Miranda
+- Yago Patrick Schnorr Pinto
+
 Projeto desenvolvido para a disciplina de Teoria de Grafos - CESUPA CC4
